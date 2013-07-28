@@ -9,7 +9,7 @@ As a full functional scraper, by searching the id of your movie, you can get the
 ## usage
 1. download the zip file
 2. install the addon from xbmc "install from zip"
-3. set the scraper for your content and update movie information. Use the .no.censor scraper for the uncensored film and the other scraper for the rest.
+3. set the scraper for your content and update movie information. Use the uncensored scraper for the uncensored film and the other scraper for the rest.
 
 ## notice
 1. if your movie is split into several parts, please use "-cd1, -cd2..." after file name to identify.
