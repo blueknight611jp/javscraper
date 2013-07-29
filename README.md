@@ -1,7 +1,7 @@
 javscraper
 ==========
 
-a xbmc scraper for your (both censored and uncensored) japanese adult video collection.
+a xbmc scraper for your (censored, uncensored and image) japanese adult video collection.
 
 ## feature
 As a full functional scraper, by searching the id of your movie, you can get the complete information about your video, including poster, actor(with thunmbnali), title, year, genre, etc.
@@ -9,7 +9,7 @@ As a full functional scraper, by searching the id of your movie, you can get the
 ## usage
 1. download the zip file
 2. install the addon from xbmc "install from zip"
-3. set the scraper for your content and update movie information. Use the uncensored scraper for the uncensored film and the other scraper for the rest.
+3. Use scraper for corresponding content and update movie information
 
 ## notice
 1. if your movie is split into several parts, please use "-cd1, -cd2..." after file name to identify.
