@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="\1" dest="3">
+			<expression />
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl clearbuffers="no" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=cari&amp;id=\1&lt;/url&gt;" dest="3">
+			<expression>([0-9]{6}.[0-9]{3})</expression>
+		</RegExp>
+		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=cari&amp;id=\1&lt;/url&gt;" dest="2">
+			<expression>([0-9]{6}.[0-9]{3})</expression>
+		</RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults clearbuffers="no" dest="8">
+		<RegExp input="$$3" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;&lt;entity&gt;\1&lt;/entity&gt;&lt;/results&gt;" dest="8">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3">
+				<expression>&lt;title&gt;(.*)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$2" output="&lt;url&gt;\1&lt;/url&gt;" dest="3+">
+				<expression />
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="4">
+		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="8">
+				<expression>&lt;span class="movie-title"&gt;&lt;h1&gt;(.*?)&lt;/h1&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
+				<expression>&lt;dt&gt;配信日:&lt;/dt&gt;\s*&lt;dd&gt;([0-9]{4}).*?&lt;/dd&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;http://www.caribbeancom.com\1001.jpg&lt;/thumb&gt;&lt;thumb&gt;http://www.caribbeancom.com\1002.jpg&lt;/thumb&gt;&lt;thumb&gt;http://www.caribbeancom.com\1003.jpg&lt;/thumb&gt;" dest="8+">
+				<expression>(/moviepages/[0-9]{6}-[0-9]{3}/images/g_big)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;studio&gt;Caribbeancom&lt;/studio&gt;" dest="8+">
+				<expression />
+			</RegExp>
+			<RegExp input="$$1" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="8+">
+				<expression repeat="yes">&lt;dd&gt;&lt;a href="/listpages.*?"&gt;(.*?)&lt;/a&gt;&lt;/dd&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;actor&gt;&lt;thumb spoof=&quot;http://www.caribbeancom.com&quot;&gt;http://www.caribbeancom.com\2/n.jpg&lt;/thumb&gt;&lt;name&gt;\1 &lt;/name&gt;&lt;/actor&gt;" dest="8+">
+				<expression>&lt;dt&gt;出演:&lt;/dt&gt;.*?&lt;dd&gt;.*?&lt;a href=".*?"&gt;(.*?)&lt;/a&gt;.*?&lt;/dd&gt;.*?(/moviepages/[0-9]{6}-[0-9]{3}/images)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
+				<expression>&lt;div class="movie-comment"&gt;(.*?)&lt;/div&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;http://www.caribbeancom.com\1001.jpg&lt;/thumb&gt;&lt;thumb&gt;http://www.caribbeancom.com\1002.jpg&lt;/thumb&gt;&lt;thumb&gt;http://www.caribbeancom.com\1003.jpg&lt;/thumb&gt;" dest="8+">
+				<expression>(/moviepages/[0-9]{6}-[0-9]{3}/images/l/)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;fanart&gt;&lt;thumb&gt;http://www.caribbeancom.com\1l_l.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
+				<expression>(/moviepages/[0-9]{6}-[0-9]{3}/images/)</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+</scraper>

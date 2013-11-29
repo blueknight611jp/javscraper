@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-22" name="jav" content="movies" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="\1" dest="3">
+			<expression />
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.arzon.jp/imagelist.html?q=\2&amp;menu=imagevideo&amp;agecheck=1&lt;/url&gt;" dest="3">
+			<expression encode="1">(%5b)?([a-zA-Z]{2,5}\-?[0-9]{2,5})(%5d)?</expression>
+		</RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults dest="8">
+		<RegExp input="$$2" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;\1&lt;/results&gt;" dest="8">
+			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http://www.arzon.jp/\1&lt;/url&gt;&lt;/entity&gt;" dest="2">
+				<expression repeat="yes">&lt;a href="/(image_[0-9]+\.html)" title="([^"]*)" rel="bookmark"&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="4">
+		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="8">
+				<expression>&lt;h1&gt;(.*)&lt;/h1&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
+				<expression>(20[0-9]{2})/[0-9]{2}/[0-9]{2}</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb spoof=&quot;http://www.arzon.jp/item_\3.htm&quot;&gt;http://img.arzon.jp/image/\1/\2/\3M.jpg&lt;/thumb&gt;&lt;fanart&gt;&lt;thumb&gt;http://img.arzon.jp/image/\1/\2/\3L.jpg|Referer=http://www.arzon.jp/item_\3.htm&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
+				<expression>src="http://img.arzon.jp/image/([0-9])/([0-9]*)/([0-9]*)M\.jpg".*?width="140"</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;studio&gt;\1&lt;/studio&gt;" dest="8+">
+				<expression>イメージメーカー：&lt;/td&gt;\s*&lt;td class="list2"&gt;\s*&lt;a href="/imagelist\.html\?mkr=[0-9]*"&gt;([^&lt;]*)&lt;/a&gt;</expression>
+			</RegExp>
+			<RegExp input="$$10" output="&lt;actor&gt;&lt;thumb spoof=&quot;http://www.arzon.jp&quot;&gt;http://img.arzon.jp/image/3/\1/\1\2S.jpg&lt;/thumb&gt;&lt;name&gt;\3&lt;/name&gt;&lt;/actor&gt;" dest="8+">
+				<RegExp input="$$1" output="\1" dest="10">
+					<expression noclean="1">タレント：&lt;/td&gt;\s*&lt;td class="list2" width="310"&gt;(.*?)&lt;/td&gt;</expression>
+				</RegExp>
+				<expression repeat="yes">href="/imagecast_([0-9]{2})([0-9]{3})\.html"&gt;(.*?)&lt;/a&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="8+">
+				<expression repeat="yes">&lt;a href="/itemlist.html\?multignr\[\]=[0-9]{5}"&gt;(.*?)&lt;/a&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
+				<expression>&lt;/table&gt;.*?&lt;td class="text" colspan="2"&gt;(.*?)&lt;/td&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+</scraper>

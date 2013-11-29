@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="metadata.laoyang945.heyzo"
+		name="Heyzo Scraper"
+		version="2.0"
+		provider-name="laoyang945">
+		<requires>
+				<import addon="xbmc.metadata" version="1.0"/>
+		</requires>
+		<extension point="xbmc.metadata.scraper.movies"
+				library="jav.xml"/>
+		<extension point="xbmc.addon.metadata">
+				<summary lang="en">Heyzo Scraper</summary>
+				<description lang="en">Download metadata and thumbnail from Heyzo</description>
+				<platform>all</platform>
+		</extension>
+</addon>
