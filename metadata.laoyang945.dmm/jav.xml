@@ -1,18 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-29" name="jav" content="movies" language="en">
+﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-12-04" name="jav" content="movies" language="en">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="\1" dest="3">
 			<expression encode="1" />
 		</RegExp>
 	</NfoUrl>
 	<CreateSearchUrl clearbuffers="no" dest="3">
-		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=dmm&amp;amp;id1=\2&amp;amp;id2=\3/&lt;/url&gt;" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=dmm&amp;amp;id1=\2&amp;amp;id2=\3&lt;/url&gt;" dest="3">
 			<expression>(%5b)?([a-zA-Z]{2,5})\-?([0-9]{2,5})(%5d)?</expression>
 		</RegExp>
 	</CreateSearchUrl>
 	<GetSearchResults dest="8">
 		<RegExp input="$$10" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;\1&lt;/results&gt;" dest="8">
 			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http://www.dmm.co.jp/\1&lt;/url&gt;&lt;/entity&gt;" dest="10">
-				<expression repeat="yes" noclean="1,2">&lt;div class="d-item"&gt;\s*&lt;ul id="list"&gt;.*?&lt;a href="/(digital/videoa/-/detail/=/cid=.*?/)"&gt;.*?&lt;span class="txt"&gt;(.*?)&lt;/span&gt;</expression>
+				<expression repeat="yes" noclean="1,2">&lt;div class="d-item"&gt;\s*&lt;ul id="list"&gt;.*?&lt;a href="http://www.dmm.co.jp/(digital/videoa/-/detail/=/cid=.*?)/"&gt;.*?&lt;span class="txt"&gt;(.*?)&lt;/span&gt;</expression>
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
@@ -23,7 +23,7 @@
 				<expression>&lt;h1.*?&gt;(.*?)&lt;/h1&gt;</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
-				<expression>(20[0-9]{2})/[0-9]{2}/[0-9]{2}</expression>
+				<expression>商品発売日：&lt;/td&gt;\s*&lt;td&gt;\s*([0-9]{4})/.*?&lt;/td&gt;</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;thumb spoof=&quot;http://www.dmm.co.jp&quot;&gt;\1ps.jpg&lt;/thumb&gt;&lt;fanart&gt;&lt;thumb spoof=&quot;http://www.dmm.co.jp&quot;&gt;\1pl.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
 				<expression>src="(http://pics.dmm.co.jp/digital/video/[^/]*/.*?)ps.jpg"</expression>
