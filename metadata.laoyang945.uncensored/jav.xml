@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-23" name="jav" content="movies" language="en">
+<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-23" name="jav" content="movies" language="en">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="\1" dest="3">
 			<expression />
@@ -7,7 +7,7 @@
 	<CreateSearchUrl clearbuffers="no" dest="3">
 		<RegExp input="$$2" output="&lt;url&gt;http://www.aventertainments.com/search_Products.aspx?languageID=2&amp;amp;dept_id=29&amp;amp;keyword=\1&amp;amp;searchby=keyword&lt;/url&gt;" dest="3">
 			<RegExp input="$$1" output="\2" dest="2">
-				<expression>(%5b)?([a-zA-Z]{2,5}\-?[0-9]{2,5})(%5d)?</expression>
+				<expression>(%5b)?([a-zA-Z0-9]{2,5}\-?[a-zA-Z0-9]{2,5})(%5d)?</expression>
 			</RegExp>
 			<expression encode="1">(.*)</expression>
 		</RegExp>
