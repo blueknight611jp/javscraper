@@ -1,14 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
+<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="\1" dest="3">
 			<expression />
 		</RegExp>
 	</NfoUrl>
 	<CreateSearchUrl clearbuffers="no" dest="3">
-		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=1pondo&amp;id=\1_\2&lt;/url&gt;" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.1pondo.tv/moviepages/\1_\2/index.htm&lt;/url&gt;" dest="3">
 			<expression>([0-9]{6})-([0-9]{3})</expression>
 		</RegExp>
-		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=1pondo&amp;id=\1_\2&lt;/url&gt;" dest="2">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.1pondo.tv/moviepages/\1_\2/index.htm&lt;/url&gt;" dest="2">
 			<expression>([0-9]{6})-([0-9]{3})</expression>
 		</RegExp>
 	</CreateSearchUrl>
@@ -40,6 +40,7 @@
 			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
 				<expression trim="1">&lt;meta name="description" content="(.*?)"&gt;</expression>
 			</RegExp>
+     
 			<expression noclean="1" />
 		</RegExp>
 	</GetDetails>
