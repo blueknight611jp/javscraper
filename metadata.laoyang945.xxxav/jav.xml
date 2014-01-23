@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="\1" dest="3">
+			<expression />
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl clearbuffers="no" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.xxx-av.com/mov/view/\1.html&lt;/url&gt;" dest="3">
+			<expression>([0-9]{5})</expression>
+		</RegExp>
+	        <RegExp input="$$1" output="&lt;url&gt;http://www.xxx-av.com/mov/view/\1.html&lt;/url&gt;" dest="2">
+                        <expression>([0-9]{5})</expression>
+                </RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults clearbuffers="no" dest="8">
+		<RegExp input="$$3" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;&lt;entity&gt;\1&lt;/entity&gt;&lt;/results&gt;" dest="8">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3">
+				<expression>&lt;title&gt;(.*)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$2" output="&lt;url&gt;\1&lt;/url&gt;" dest="3+">
+				<expression />
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="4">
+		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="8">
+				<expression>&lt;title&gt;(.*?)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;http://image.xxx-av.com/image/\1/movie_main.jpg&lt;/thumb&gt;" dest="8+">
+				<expression>wishlist/do_add/([0-9]{5}).html</expression>
+			</RegExp>
+
+			<RegExp input="$$1" output="&lt;fanart&gt;&lt;thumb&gt;http://image.xxx-av.com/image/\1/movie_main.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
+                                <expression>wishlist/do_add/([0-9]{5}).html</expression>
+                        </RegExp>
+
+			<RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
+				<expression>(20[0-9]{2})-[0-9]{2}-[0-9]{2}</expression>
+			</RegExp>
+
+			<RegExp input="$$1" output="&lt;studio&gt;xxx-av&lt;/studio&gt;" dest="8+">
+				<expression />
+			</RegExp>
+
+			<RegExp input="$$1" output="&lt;actor&gt;&lt;thumb&gt;\1&lt;/thumb&gt;&lt;name&gt;\2&lt;/name&gt;&lt;/actor&gt;" dest="8+">
+				<expression>img src=&quot;(http://image.xxx-av.com/image/[0-9]{5}/m_act\.jpg).*?actkey/[0-9]{4}\.html&quot;&gt;(.*?)&lt;</expression>
+			</RegExp>
+			
+			<!--RegExp input="$$1" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="8+">
+				<expression repeat="yes">&lt;meta name="Keywords" content="(.*),?" /&gt;</expression>
+			</RegExp-->
+
+			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
+				<expression trim="1">&lt;meta name="Description" content="(.*?),? ?/&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+</scraper>

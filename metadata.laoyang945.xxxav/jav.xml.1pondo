@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="\1" dest="3">
+			<expression />
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl clearbuffers="no" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=1pondo&amp;id=\1_\2&lt;/url&gt;" dest="3">
+			<expression>([0-9]{6})-([0-9]{3})</expression>
+		</RegExp>
+		<RegExp input="$$1" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=1pondo&amp;id=\1_\2&lt;/url&gt;" dest="2">
+			<expression>([0-9]{6})-([0-9]{3})</expression>
+		</RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults clearbuffers="no" dest="8">
+		<RegExp input="$$3" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;&lt;entity&gt;\1&lt;/entity&gt;&lt;/results&gt;" dest="8">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3">
+				<expression>&lt;title&gt;(.*)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$2" output="&lt;url&gt;\1&lt;/url&gt;" dest="3+">
+				<expression />
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="4">
+		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="8">
+				<expression>&lt;title&gt;(.*?)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;\1/popu/1.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/popu/2.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/popu/3.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/thum_b.jpg&lt;/thumb&gt;&lt;fanart&gt;&lt;thumb&gt;\1str.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
+				<expression>(http://www.1pondo.tv/moviepages/[0-9]{6}_[0-9]{3}/images/)thum_b.jpg</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;studio&gt;1pondo&lt;/studio&gt;" dest="8+">
+				<expression />
+			</RegExp>
+			<RegExp input="$$1" output="&lt;actor&gt;&lt;thumb spoof=&quot;http://www.1pondo.tv&quot;&gt;\1&lt;/thumb&gt;&lt;name&gt;\2&lt;/name&gt;&lt;/actor&gt;" dest="8+">
+				<expression>(http://www.1pondo.tv/moviepages/[0-9]{6}_[0-9]{3}/images/thum_b.jpg).*?&lt;h2&gt;(.*?)&lt;/h2&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
+				<expression trim="1">&lt;meta name="description" content="(.*?)"&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+</scraper>
