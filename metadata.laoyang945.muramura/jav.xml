@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><scraper framework="1.1" date="2013-11-30" name="jav" content="movies" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="\1" dest="3">
+			<expression />
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl clearbuffers="no" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.muramura.tv/moviepages/\1_\2/index.html&lt;/url&gt;" dest="3">
+			<expression>([0-9]{6})-([0-9]{3})</expression>
+		</RegExp>
+		<RegExp input="$$1" output="&lt;url&gt;http://www.muramura.tv/moviepages/\1_\2/index.html&lt;&lt;/url&gt;" dest="2">
+			<expression>([0-9]{6})-([0-9]{3})</expression>
+		</RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults clearbuffers="no" dest="8">
+		<RegExp input="$$3" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;&lt;entity&gt;\1&lt;/entity&gt;&lt;/results&gt;" dest="8">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3">
+				<expression>&lt;h1&gt;.*&lt;/script&gt;(.*)&lt;/h1&gt;</expression>
+			</RegExp>
+			<RegExp input="$$2" output="&lt;url&gt;\1&lt;/url&gt;" dest="3+">
+				<expression />
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="4">
+		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="8">
+				<expression>&lt;h1&gt;.*&lt;/script&gt;(.*)&lt;/h1&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
+            <!-- <li class="lineup"><em>更新日：</em>2014-01-14</li> -->
+				<expression>更新日：&lt;/em&gt;([0-9]{4})-[0-9]{2}-[0-9]{2}&lt;/li&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;http://www.muramura.tv/moviepages/\1/images/thum.jpg&lt;/thumb&gt;" dest="8+">
+				<expression>var movie_id = &apos;([0-9]{6}_[0-9]{3})&apos;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;studio&gt;muramura&lt;/studio&gt;" dest="8+">
+				<expression />
+			</RegExp>
+            
+            <!--Genre-->
+            <!-- <li class="genre"><em>カテゴリー：</em><a href="ht">風俗嬢</a> <a href="httml">生ハメ</a> <a href="">中出し</a></li> -->
+            <RegExp input="$$1" output="\1" dest="7">
+                <expression repeat="yes">&lt;li class=&quot;genre&quot;&gt;&lt;em&gt;カテゴリー：&lt;/em&gt;.*?&gt;(.*?)&lt;/a&gt;&lt;/li&gt;</expression>
+            </RegExp>
+            <RegExp input="$$7" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="8+">
+				<expression repeat="yes">(\S+)\s?</expression>
+			</RegExp>
+            
+            
+            
+			<RegExp input="$$1" output="&lt;actor&gt;&lt;thumb&gt;http://www.muramura.tv/moviepages/\1/images/thum.jpg&lt;/thumb&gt;&lt;name&gt;\2&lt;/name&gt;&lt;/actor&gt;" dest="8+">
+                <!-- var movie_id = '062213_898'; -->
+                <!-- <em>名前：</em><a href="http://www.muramura.tv/search/%C0%EE%C2%BC%A5%B5%A5%AF%A5%E9/1.html">川村サクラ</a> -->
+                <expression>var movie_id = &apos;([0-9]{6}_[0-9]{3})&apos;.*?&lt;em&gt;名前：&lt;/em&gt;.*?html&quot;&gt;(.*?)&lt;/a&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="8+">
+                <!-- <li><em>コメント：</em>今日ホテ さい。</li> -->
+				<expression>&lt;em&gt;コメント：&lt;/em&gt;(.*?)&lt;/li&gt;</expression>
+			</RegExp>
+
+			<RegExp input="$$1" output="&lt;fanart&gt;&lt;thumb&gt;http://www.muramura.tv/moviepages/\1/images/str.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
+				<expression>http://www.muramura.tv/moviepages/([0-9]{6}_[0-9]{3})/images/str.jpg</expression>
+            </RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+</scraper>
