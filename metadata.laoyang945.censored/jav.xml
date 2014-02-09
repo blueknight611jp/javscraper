@@ -5,19 +5,18 @@
 		</RegExp>
 	</NfoUrl>
 	<CreateSearchUrl dest="3">
-		<!--RegExp input="$$2" output="&lt;url&gt;http://javscraper.ap01.aws.af.cm/transfer.php?studio=arzon&amp;amp;id=\1&lt;/url&gt;" dest="3"-->
 
 		<RegExp input="$$2" output="&lt;url&gt;http://www.arzon.jp/index.php?action=adult_customer_agecheck&agecheck=1&redirect=http%3A%2F%2Fwww.arzon.jp%2Fitemlist.html%3Fq=\1 &lt;/url&gt;" dest="3">
-
 			<RegExp input="$$1" output="\2" dest="2">
 				<expression>(%5b)?([a-zA-Z0-9]{2,5}\-?[a-zA-Z0-9]{2,5})(%5d)?</expression>
 			</RegExp>
 			<expression />
 		</RegExp>
 	</CreateSearchUrl>
+    
 	<GetSearchResults dest="8">
 		<RegExp input="$$3" output="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;\1&lt;/results&gt;" dest="8">
-			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http://javscraper.ap01.aws.af.cm/hw.php?url=http://www.arzon.jp/\1&lt;/url&gt;&lt;/entity&gt;" dest="3">
+			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http://www.arzon.jp/\1&lt;/url&gt;&lt;/entity&gt;" dest="3">
 				<expression repeat="yes" noclean="1">&lt;dt&gt;\s*&lt;a href="/(item_[0-9]+\.html)" title="(.*?)"&gt;</expression>
 			</RegExp>
 			<expression noclean="1" />
